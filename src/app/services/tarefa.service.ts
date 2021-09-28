@@ -1,0 +1,25 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { Tarefa } from "../models/tarefa";
+
+@Injectable({
+    providedIn: "root",
+})
+export class TarefaService {
+    private baseURL = "https://localhost:44362/api/tarefa";
+
+    constructor(private http: HttpClient) {}
+
+    list(): Observable<Tarefa[]> {
+        return this.http.get<Tarefa[]>(`${this.baseURL}/list`);
+    }
+
+    getById(id: number): Observable<Tarefa> {
+        return this.http.get<Tarefa>(`${this.baseURL}/getbyid/${id}`);
+    }
+
+    create(tarefa: Tarefa): Observable<Tarefa> {
+        return this.http.post<Tarefa>(`${this.baseURL}/create`, tarefa);
+    }
+}
